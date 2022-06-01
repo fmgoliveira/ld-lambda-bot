@@ -3,6 +3,7 @@
 desktop.ini
 db.js
 db
+.env
 
 # Logs
 logs
