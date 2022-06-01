@@ -93,9 +93,8 @@ export const button: Button = {
     try {
       const attachment = await createTranscript(channel, {
         limit: -1,
-        returnType: 'attachment',
         fileName: `${channel.name}_transcript.html`
-      }) as MessageAttachment;
+      });
 
       const logChannelId = (await Guild.findOne({ guildId: interaction.guildId }))!.modules.tickets.logChannel;
       const logChannel = interaction.guild!.channels.cache.get(logChannelId) as TextChannel | NewsChannel | undefined;
@@ -111,7 +110,7 @@ export const button: Button = {
             }
           ]
         });
-        logMsg = await logChannel.send({ attachments: [attachment] });
+        logMsg = await logChannel.send({ attachments: [attachment as MessageAttachment] });
       }
 
       await channel.permissionOverwrites.delete(ticketDb.memberId);

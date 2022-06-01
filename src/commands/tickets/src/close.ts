@@ -56,9 +56,8 @@ export default async (client: ExtendedClient, interaction: ExtendedCommandIntera
   try {
     const attachment = await createTranscript(channel, {
       limit: -1,
-      returnType: 'attachment',
       fileName: `${channel.name}_transcript.html`
-    }) as MessageAttachment;
+    });
 
     const logChannelId = (await Guild.findOne({ guildId: interaction.guildId }))!.modules.tickets.logChannel;
     const logChannel = interaction.guild!.channels.cache.get(logChannelId) as TextChannel | NewsChannel | undefined;
@@ -68,13 +67,13 @@ export default async (client: ExtendedClient, interaction: ExtendedCommandIntera
         embeds: [
           {
             author: { name: 'Lambda Ticket System', iconURL: client.customEmojisUrl.tickets },
-            description: `${interaction.user.tag} (${interaction.user.id}) has ${deleteChannel ? 'deleted' : 'closed'} the ticket in \`#${channel.name}\``,
+            description: `${interaction.user.tag} (${interaction.user.id}) has ${categoryDb.deleteOnClose ? 'deleted' : 'closed'} the ticket in \`#${channel.name}\``,
             color: client.colors.embedColor.decimal,
             footer: { text: 'Ticket Transcript attached below' },
           }
         ]
       });
-      logMsg = await logChannel.send({ attachments: [attachment] });
+      logMsg = await logChannel.send({ attachments: [attachment as MessageAttachment] });
     }
 
     await channel.permissionOverwrites.delete(ticketDb.memberId);
