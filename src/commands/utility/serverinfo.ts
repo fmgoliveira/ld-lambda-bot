@@ -46,7 +46,7 @@ export const command: Command = {
         ${interaction.guild!.roles.cache.filter(r => r.name !== '@everyone').map(r => `<@&${r.id}>`).join(' ')}
       `.substring(0, 1024))
       .addField('Emojis', `
-        ${interaction.guild!.emojis.cache.map(e => e.animated ? '<a:' + e.name + ':' + e.id + '>' : '<:' + e.name + ':' + e.id + '>').join(' ') + ' '}
+        ${interaction.(guild!.emojis.cache.map(e => e.animated ? '<a:' + e.name + ':' + e.id + '>' : '<:' + e.name + ':' + e.id + '>').join(' ') + ' ')}
       `.substring(0, 1024))
 
     if (interaction.guild!.iconURL({ dynamic: true }) !== null) embed.setThumbnail(interaction.guild!.iconURL({ dynamic: true })!);
