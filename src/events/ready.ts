@@ -52,7 +52,7 @@ export const event: Event = {
         await guild.commands.set(commands);
         console.log(`${chalk.green("[INFO]")} Set Commands for development server\nCommand List: ${(await guild.commands.fetch()).map((c) => c.name).join(", ")}\n`);
       } else {
-        const globalCommands = commands.filter(x => x.botAdminOnly === false && x.category !== 'dev');
+        const globalCommands = commands.filter(x => !x.botAdminOnly && x.category !== 'dev');
         await client.application.commands.set(globalCommands);
         console.log(`${chalk.green("[INFO]")} Set Commands for production mode (all guilds the bot is in)\nCommand List:\n ${(await client.application.commands.fetch()).map((c) => c.name).join(", ")}\n`);
 
