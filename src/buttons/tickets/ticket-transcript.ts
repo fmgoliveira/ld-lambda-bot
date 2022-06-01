@@ -53,7 +53,6 @@ export const button: Button = {
     try {
       const attachment = await createTranscript(channel, {
         limit: -1,
-        returnType: 'attachment',
         fileName: `${channel.name}_transcript.html`
       }) as MessageAttachment;
 
@@ -73,7 +72,7 @@ export const button: Button = {
 
       await channelToSend.send({
         content: `Here is the transcript for the ticket <#${channel.id}>`,
-        attachments: [attachment],
+        files: [attachment],
       });
 
       await interaction.editReply({
