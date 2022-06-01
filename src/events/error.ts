@@ -6,8 +6,7 @@ export const event: Event = {
 
   run: async (client, error: Error) => {
     const webhook = new WebhookClient({
-      id: process.env.ERROR_WEBHOOK_ID!,
-      token: process.env.ERROR_WEBHOOK_TOKEN!,
+      url: process.env.ERRORS_WEBHOOK_URL!,
     });
 
     await webhook.send({
