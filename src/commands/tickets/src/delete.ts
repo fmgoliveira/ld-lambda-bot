@@ -15,7 +15,6 @@ export default async (client: ExtendedClient, interaction: ExtendedCommandIntera
   try {
     const attachment = await createTranscript(channel, {
       limit: -1,
-      returnType: 'attachment',
       fileName: `${channel.name}_transcript.html`
     }) as MessageAttachment;
 
@@ -33,7 +32,7 @@ export default async (client: ExtendedClient, interaction: ExtendedCommandIntera
           }
         ]
       });
-      logMsg = await logChannel.send({ attachments: [attachment] });
+      logMsg = await logChannel.send({ files: [attachment] });
     }
 
     await ticketDb.remove();

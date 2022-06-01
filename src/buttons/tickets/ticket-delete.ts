@@ -52,7 +52,6 @@ export const button: Button = {
     try {
       const attachment = await createTranscript(channel, {
         limit: -1,
-        returnType: 'attachment',
         fileName: `${channel.name}_transcript.html`
       }) as MessageAttachment;
 
@@ -70,7 +69,7 @@ export const button: Button = {
             }
           ]
         });
-        logMsg = await logChannel.send({ attachments: [attachment] });
+        logMsg = await logChannel.send({ files: [attachment] });
       }
 
       await ticketDb.remove();
