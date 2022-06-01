@@ -1,0 +1,39 @@
+[
+  "autoreact",
+  "chatbot",
+  "giveaway",
+  
+  "about",
+  "help",
+  "invite",
+  "support",
+  "vote",
+  
+  "buginfo",
+  "buglist",
+  "bugreport",
+
+  "clearqueue",
+  "filter",
+  "loop",
+  "nowplaying",
+  "pause",
+  "previous",
+  "queue",
+  "resume",
+  "search",
+  "seek",
+  "shuffle",
+  "skip",
+  "stop",
+  "volume",
+
+  "ban",
+  "clear",
+  "clearwarns",
+  "kick",
+  "slowmode",
+  "timeout",
+  "warn",
+  "warnings"
+]
