@@ -4,6 +4,7 @@ desktop.ini
 db.js
 db
 .env
+.env.heroku
 
 # Logs
 logs
