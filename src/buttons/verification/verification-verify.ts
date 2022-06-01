@@ -20,18 +20,6 @@ export const button: Button = {
       ]
     });
 
-    const userHasRoles = interaction.member.roles.cache.some(r => guildDb.modules.administration.staffRoles.includes(r.id));
-
-    if (user && !userHasRoles) return await interaction.editReply({
-      embeds: [
-        {
-          author: { name: 'Insufficient Permissions', iconURL: client.customEmojisUrl.error },
-          description: 'Only Server Staff members are allowed to verify other users.',
-          color: client.colors.error.decimal,
-        }
-      ],
-    });
-
     const rolesToAdd = verifyDb.rolesToAdd;
     const rolesToRemove = verifyDb.rolesToRemove;
 
