@@ -54,10 +54,12 @@ export default async (client: ExtendedClient, interaction: ExtendedCommandIntera
   }
 
   try {
-    const attachment = await createTranscript(channel, {
+    const rawAttachment = await createTranscript(channel, {
       limit: -1,
-      fileName: `${channel.name}_transcript.html`
-    });
+      returnType: 'buffer',
+    }) as Buffer;
+    
+    const attachment = new MessageAttachment(rawAttachment, `${channel.name}_transcript.html`);
 
     const logChannelId = (await Guild.findOne({ guildId: interaction.guildId }))!.modules.tickets.logChannel;
     const logChannel = interaction.guild!.channels.cache.get(logChannelId) as TextChannel | NewsChannel | undefined;
