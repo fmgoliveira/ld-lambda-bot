@@ -2,8 +2,7 @@ import { MessageEmbed, WebhookClient } from "discord.js";
 import { client } from "..";
 
 const webhook = new WebhookClient({
-  id: process.env.ERROR_WEBHOOK_ID!,
-  token: process.env.ERROR_WEBHOOK_TOKEN!,
+  url: process.env.ERRORS_WEBHOOK_URL!,
 });
 
 process.on('uncaughtException', (err) => {
