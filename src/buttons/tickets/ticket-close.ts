@@ -9,7 +9,6 @@ import { MessageActionRow } from 'discord.js';
 import { CategoryChannel } from 'discord.js';
 import { MessageAttachment } from 'discord.js';
 import { createTranscript } from 'discord-html-transcripts';
-import { metadata } from 'figlet';
 
 export const button: Button = {
   name: 'ticket-close',
@@ -92,12 +91,10 @@ export const button: Button = {
     }
 
     try {
-      const rawAttachment = await createTranscript(channel, {
+      const attachment = await createTranscript(channel, {
         limit: -1,
-        returnType: 'buffer',
-      }) as Buffer;
-      
-      const attachment = new MessageAttachment(rawAttachment, `${channel.name}_transcript.html`);
+        fileName: `${channel.name}_transcript.html`
+      }) as MessageAttachment;
 
       const logChannelId = (await Guild.findOne({ guildId: interaction.guildId }))!.modules.tickets.logChannel;
       const logChannel = interaction.guild!.channels.cache.get(logChannelId) as TextChannel | NewsChannel | undefined;
@@ -113,7 +110,7 @@ export const button: Button = {
             }
           ]
         });
-        logMsg = await logChannel.send({ attachments: [attachment] });
+        logMsg = await logChannel.send({ files: [attachment] });
       }
 
       await channel.permissionOverwrites.delete(ticketDb.memberId);
