@@ -44,10 +44,10 @@ export const button: Button = {
         Offline Members: **${guild!.members.cache.filter(m => m.presence?.status === 'offline').size}**
       `.substring(0, 1024))
       .addField('Roles', `
-        ${guild!.roles.cache.filter(r => r.name !== '@everyone').map(r => `@${r.name}`).join(' ')}
+        ${guild!.roles.cache.filter(r => r.name !== '@everyone').map(r => `@${r.name}`).join(' ') || 'No roles'}
       `.substring(0, 1024))
       .addField('Emojis', `
-        ${guild!.emojis.cache.map(e => e.animated ? '<a:' + e.name + ':' + e.id + '>' : '<:' + e.name + ':' + e.id + '>').join(' ') + ' '}
+        ${guild!.emojis.cache.map(e => e.animated ? '<a:' + e.name + ':' + e.id + '>' : '<:' + e.name + ':' + e.id + '>').join(' ') + ' ' || 'No emojis'}
       `.substring(0, 1024))
 
     return await interaction.update({
