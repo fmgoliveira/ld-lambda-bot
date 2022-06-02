@@ -12,7 +12,7 @@ export const chatSend = async (message: Message) => {
       msg = message.content.replace(`<@${u.id}>`, u.username);
     });
 
-    await axios.get(`https://api.brainshop.ai/get?bid=${bid}&key=${key}&uid=${uid}&msg=${msg}`).then(async (res) => {
+    await axios.get(`http://api.brainshop.ai/get?bid=${bid}&key=${key}&uid=${uid}&msg=${msg}`).then(async (res) => {
       const data = res.data;
       const reply = data.cnt;
 
