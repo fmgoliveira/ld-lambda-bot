@@ -184,6 +184,7 @@ export const command: Command = {
       ]
     });
 
-    require(`./src/${subCommand}`)(client, interaction, ticketDb, categoryDb);
+    const cmd = await import(`./src/${subCommand}`);
+    cmd(client, interaction, ticketDb, categoryDb);
   },
 }
