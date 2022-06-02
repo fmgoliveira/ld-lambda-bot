@@ -2,6 +2,16 @@ import Guild from "../../database/models/Guild";
 import Ticket from "../../database/models/Ticket";
 import TicketCategory from "../../database/models/TicketCategory";
 import Command from "../../interfaces/Command";
+import add from './src/add';
+import claim from "./src/claim";
+import close from './src/close';
+import _delete from "./src/delete";
+import lock from "./src/lock";
+import remove from "./src/remove";
+import reopen from "./src/reopen";
+import transcript from "./src/transcript";
+import unclaim from "./src/unclaim";
+import unlock from "./src/unlock";
 
 export const command: Command = {
   name: "ticket",
@@ -184,7 +194,27 @@ export const command: Command = {
       ]
     });
 
-    const cmd = await import(`./src/${subCommand}`);
-    cmd(client, interaction, ticketDb, categoryDb);
+    switch (subCommand) {
+      case 'add':
+        return await add(client, interaction, ticketDb, categoryDb);
+      case 'remove':
+        return await remove(client, interaction, ticketDb, categoryDb);
+      case 'close':
+        return await close(client, interaction, ticketDb, categoryDb);
+      case 'transcript':
+        return await transcript(client, interaction, ticketDb, categoryDb);
+      case 'reopen':
+        return await reopen(client, interaction, ticketDb, categoryDb);
+      case 'delete':
+        return await _delete(client, interaction, ticketDb, categoryDb);
+      case 'claim':
+        return await claim(client, interaction, ticketDb, categoryDb);
+      case 'unclaim':
+        return await unclaim(client, interaction, ticketDb, categoryDb);
+      case 'lock':
+        return await lock(client, interaction, ticketDb, categoryDb);
+      case 'unlock':
+        return await unlock(client, interaction, ticketDb, categoryDb);
+    }
   },
 }
