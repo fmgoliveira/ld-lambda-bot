@@ -1,8 +1,9 @@
 import { config } from "dotenv";
 import Client from "./structures/Client";
-import "./utils/errorHandleSystem";
 
 config();
+
+import "./utils/errorHandleSystem";
 
 export const client = new Client({
     intents: 38855,
