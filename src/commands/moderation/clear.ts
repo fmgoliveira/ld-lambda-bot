@@ -85,6 +85,15 @@ export const command: Command = {
           i++;
         }
       });
+    } else {
+      let i = 0;
+
+      messages.forEach((m) => {
+        if (!m.pinned && amount > i) {
+          filtered.push(m);
+          i++;
+        }
+      });
     }
 
     if (filtered.length === 0) return await interaction.editReply({
