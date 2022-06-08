@@ -22,13 +22,13 @@ export const event: Event = {
     const userDb = await User.findOne({ discordId: interaction.user.id });
 
     if (((interaction.isButton() && interaction.customId !== 'privacyPolicy-accept') || interaction.isCommand() || interaction.isSelectMenu() || interaction.isContextMenu() || interaction.isModalSubmit()) && (!userDb || !userDb.acceptedPolicy)) return await interaction.reply({
-        embeds: [
-          new MessageEmbed()
-            .setColor(client.colors.embedColor.decimal)
-            .setAuthor({ name: `${client.user?.username} | Privacy Policy & ToS`, iconUrl: client.user?.displayAvatarURL({ dynamic: true }) } as MessageEmbedAuthor)
-            .setThumbnail(client.user!.displayAvatarURL({ dynamic: true }))
-            .setDescription(`You need to accept the **Privacy Policy** and the **Terms of Service** to use this bot.`)
-            .addField('Privacy Policy', `
+      embeds: [
+        new MessageEmbed()
+          .setColor(client.colors.embedColor.decimal)
+          .setAuthor({ name: `${client.user?.username} | Privacy Policy & ToS`, iconUrl: client.user?.displayAvatarURL({ dynamic: true }) } as MessageEmbedAuthor)
+          .setThumbnail(client.user!.displayAvatarURL({ dynamic: true }))
+          .setDescription(`You need to accept the **Privacy Policy** and the **Terms of Service** to use this bot.`)
+          .addField('Privacy Policy', `
           Our Privacy Policy describes our policies and procedures on the collection, use and disclosure of your information when you use the bot and tells you about your privacy rights and how the law protects you.
     
           > **We use your personal data to provide and improve the bot. By using the bot, you agree to the collection and use of information in accordance with our Privacy Policy.**
@@ -38,7 +38,7 @@ export const event: Event = {
 
           _ _
           `)
-            .addField('Terms of Service', `
+          .addField('Terms of Service', `
           Our Terms of Service constitute a legally binding agreement made between you and Lambda Development, concerning your access to and use of the bot. You agree that by utilising the bot, you have read, understood, and agreed to be bound by all of our Terms of Service. 
 
           > **If you do not agree with all of our Terms of Service, then you are expressly prohibited from using the bot and you must discontinue use immediately.**
@@ -46,20 +46,20 @@ export const event: Event = {
           **Where can I find the Terms of Service?**
           You can read the Terms of Service by clicking on **[this link](https://bot.lambdadev.xyz/terms)**.
           `)
-            .setFooter({ text: 'By clicking in the button below, you agree to the terms above.' }),
-        ],
-        components: [
-          new MessageActionRow()
-            .addComponents(
-              new MessageButton()
-                .setCustomId('privacyPolicy-accept')
-                .setStyle('SUCCESS')
-                .setLabel('Accept')
-            )
-        ],
-        ephemeral: true,
-        fetchReply: true,
-      });
+          .setFooter({ text: 'By clicking in the button below, you agree to the terms above.' }),
+      ],
+      components: [
+        new MessageActionRow()
+          .addComponents(
+            new MessageButton()
+              .setCustomId('privacyPolicy-accept')
+              .setStyle('SUCCESS')
+              .setLabel('Accept')
+          )
+      ],
+      ephemeral: true,
+      fetchReply: true,
+    });
 
     if ((interaction.isButton() || interaction.isCommand() || interaction.isSelectMenu() || interaction.isContextMenu() || interaction.isModalSubmit()) && userDb?.blacklisted) {
       const logsWebhook = new WebhookClient({
@@ -262,18 +262,16 @@ export const event: Event = {
           if (roles.length > 0) {
             const member = interaction.member!;
             const memberRoles = member.roles as GuildMemberRoleManager;
-            for (const roleId of roles) {
-              if (!memberRoles.cache.has(roleId)) {
-                return interaction.reply({
-                  embeds: [
-                    {
-                      description: `${client.customEmojis.error} | This command may only be used by the server staff.\n*The Server Staff Roles can be set in the online dashboard.*`,
-                      color: client.colors.error.decimal,
-                    }
-                  ],
-                  ephemeral: true
-                });
-              }
+            if (!memberRoles.cache.some(r => roles.includes(r.id))) {
+              return interaction.reply({
+                embeds: [
+                  {
+                    description: `${client.customEmojis.error} | This command may only be used by the server staff.\n*The Server Staff Roles can be set in the online dashboard.*`,
+                    color: client.colors.error.decimal,
+                  }
+                ],
+                ephemeral: true
+              });
             }
           }
         }
@@ -286,18 +284,16 @@ export const event: Event = {
           if (roles.length > 0) {
             const member = interaction.member!;
             const memberRoles = member.roles as GuildMemberRoleManager;
-            for (const roleId of roles) {
-              if (!memberRoles.cache.has(roleId)) {
-                return interaction.reply({
-                  embeds: [
-                    {
-                      description: `${client.customEmojis.error} | This command may only be used by the server moderators.\n*The Moderator Roles can be set in the online dashboard.*`,
-                      color: client.colors.error.decimal,
-                    }
-                  ],
-                  ephemeral: true
-                });
-              }
+            if (!memberRoles.cache.some(r => roles.includes(r.id))) {
+              return interaction.reply({
+                embeds: [
+                  {
+                    description: `${client.customEmojis.error} | This command may only be used by the server moderators.\n*The Moderator Roles can be set in the online dashboard.*`,
+                    color: client.colors.error.decimal,
+                  }
+                ],
+                ephemeral: true
+              });
             }
           }
         }
@@ -363,7 +359,7 @@ export const event: Event = {
       const staffRoles = (await Guild.findOne({ guildId: interaction.guild!.id }))?.modules.administration.staffRoles;
       const moderatorRoles = (await Guild.findOne({ guildId: interaction.guild!.id }))?.modules.moderation.moderatorRoles;
 
-      if (interaction.inGuild() && (!command.staffOnly || (command.staffOnly && !staffRoles) || command.category !== 'moderation' || (command.category === 'moderation' && !moderatorRoles))) {
+      if (interaction.inGuild() && (!command.staffOnly || (command.staffOnly && !staffRoles) || (command.category === 'moderation' && !moderatorRoles))) {
         const userPerms = formatPermsArray(command.userPermissions as PermissionString[]);
         if (!(interaction.memberPermissions?.has(command.userPermissions ?? []) ?? false)) {
           return interaction.reply({
