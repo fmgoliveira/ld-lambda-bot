@@ -2,7 +2,7 @@ import Command from "../../interfaces/Command";
 import { MessageEmbed } from "discord.js";
 import { MessageActionRow } from "discord.js";
 import { MessageSelectMenu } from "discord.js";
-import { client } from "../../index";
+import { client } from "../..";
 
 export const command: Command = {
   name: "help",

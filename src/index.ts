@@ -1,6 +1,5 @@
 import { config } from "dotenv";
 import Client from "./structures/Client";
-
 config();
 
 import "./utils/errorHandleSystem";
