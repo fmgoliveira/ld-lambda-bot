@@ -1,5 +1,5 @@
 import { MessageEmbed } from "discord.js";
-import { client } from "../";
+import { client } from "../index";
 
 export const aboutPages: MessageEmbed[] = [
   new MessageEmbed()

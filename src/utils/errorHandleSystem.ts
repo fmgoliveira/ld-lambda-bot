@@ -1,5 +1,5 @@
 import { MessageEmbed, WebhookClient } from "discord.js";
-import { client } from "../";
+import { client } from "../index";
 
 const webhook = new WebhookClient({
   url: process.env.ERRORS_WEBHOOK_URL!,
