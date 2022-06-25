@@ -9,7 +9,6 @@ export const command: Command = {
   dmOnly: false,
   guildOnly: true,
   cooldown: 3,
-  ephemeralReply: true,
 
   run: async (client, interaction) => {
     const db = await Guild.findOne({ guildId: interaction.guildId })!;
