@@ -46,14 +46,13 @@ export const event: Event = {
     await (async () => {
       if (message.author.bot || message.author.system) return;
       const userDb = await User.findOne({ discordId: message.author.id });
-      if (!userDb) return;
       const levelsDb = guildDb.modules.levels;
       if (!levelsDb.enabled) return;
       const noXpRoles = levelsDb.noXpRoles.map(r => message.guild!.roles.cache.get(r));
       const noXpChannels = levelsDb.noXpChannels.map(c => message.guild!.channels.cache.get(c));
       if (noXpRoles.some((r) => r && message.member!.roles.cache.has(r.id)) || noXpChannels.some((c) => c && message.channel.id === c.id)) return;
       let xpRate: number = levelsDb.xpRate;
-      const userHasVoted = userDb.voted;
+      const userHasVoted = userDb?.voted;
       if (userHasVoted) xpRate = xpRate * 1.25;
       const xp = Math.floor((Math.floor(Math.random() * 19) + 1) * xpRate);
       const user = await Levels.fetch(message.author.id, message.guild!.id)
